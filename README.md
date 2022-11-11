@@ -28,10 +28,11 @@ We have used Extra Tress Regressor for predicting the irradiance. However there 
 
 The data referes to the Mauna Loa side of the Big Island of Hawaii which generally has high temperature. Our project is based on Indian conditions which experiences this temperature only in summers. Hence, the model has excellent predictions in summer conditions while it lacks in winter conditions.
 
-
-
 To predict the voltage/Power from temperature and irradiance, we will use solar panels in MATLAB. This would give us a good estimate of the power.
 
 Futhermore, the grid tariffs and solar power costs should be used to calculate cost.
 
 The MATLAB data can be utilised to predict power output (Open the xlsx file in sheets for best experience).
+
+
+For winters, we have normalised the data from 0 to 1. This will move everything into relative domain instead of absolute domain.
