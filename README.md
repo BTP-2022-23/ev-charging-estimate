@@ -37,5 +37,7 @@ The MATLAB data can be utilised to predict power output (Open the xlsx file in s
 2. activate the virtual environment: ".\venv\Scripts\activate".
 3. change the directory: "cd .\ev-charging-estimate\webpage\".
 4. install the requirements: "pip install -r requirements.txt".
+5. Download the saved model from here: "https://drive.google.com/file/d/1SfkKGifIcJWBeTB9crVyTbbHxO3XNnpV/view?usp=share_link".
+6. move the downloaded model to webpage/main/model.
 5. run the webpage: "python manage.py runserver".
 6. Open the link from the terminal, default is "http://127.0.0.1:8000/"
