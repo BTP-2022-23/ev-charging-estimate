@@ -1,0 +1,17 @@
+__pycache__/
+.env
+db.sqlite3
+staticfiles/
+# scss/
+package-lock.json
+# package.json
+
+.vscode
+.DS_Store
+**/*.pyc
+**/*.pyo
+
+populate.py
+
+
+webpage/main/model/ropar_model.pkl
