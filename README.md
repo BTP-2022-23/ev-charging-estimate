@@ -24,15 +24,18 @@ Currently, there is no API which provides solar irradiance. We have used ML to p
 
 The data has been taken from : https://2017.spaceappschallenge.org/challenges/earth-and-us/you-are-my-sunshine/details 
 
-We have used Extra Tress Regressor for predicting the irradiance. However there are certain limitations:
+We have used Extra Tress Regressor for predicting the irradiance. 
 
-The data referes to the Mauna Loa side of the Big Island of Hawaii which generally has high temperature. Our project is based on Indian conditions which experiences this temperature only in summers. Hence, the model has excellent predictions in summer conditions while it lacks in winter conditions.
-
-To predict the voltage/Power from temperature and irradiance, we will use solar panels in MATLAB. This would give us a good estimate of the power.
 
 Futhermore, the grid tariffs and solar power costs should be used to calculate cost.
 
 The MATLAB data can be utilised to predict power output (Open the xlsx file in sheets for best experience).
 
+# Instruction to run the webpage
 
-For winters, we have normalised the data from 0 to 1. This will move everything into relative domain instead of absolute domain.
+1. Create a virtual environment: "python -m venv venv" outside the directory.
+2. activate the virtual environment: ".\venv\Scripts\activate".
+3. change the directory: "cd .\ev-charging-estimate\webpage\".
+4. install the requirements: "pip install -r requirements.txt".
+5. run the webpage: "python manage.py runserver".
+6. Open the link from the terminal, default is "http://127.0.0.1:8000/"
