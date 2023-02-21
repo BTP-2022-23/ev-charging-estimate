@@ -9,6 +9,7 @@ import requests
 import json
 from datetime import datetime
 from pytz import timezone
+import timezonefinder
 
 # for saving and loading model
 from joblib import Parallel, delayed
@@ -21,7 +22,9 @@ import joblib
 # The below function handles the API call.
 def API_handler(lat=30.9688367,lon=76.526088):
 
-    dd = datetime.now(timezone('Asia/Kolkata'))
+    tf = timezonefinder.TimezoneFinder()
+    timezone_str = tf.certain_timezone_at(lat=lat, lng=lon)
+    dd = datetime.now(timezone(timezone_str))
     month = dd.month
     day = dd.day
     hour = dd.hour
@@ -31,6 +34,7 @@ def API_handler(lat=30.9688367,lon=76.526088):
 
     if response.status_code == 200:
         print("Sucessfully fetched the data from the API.")
+        # print(response.json())
     else:
         print(f"Hello User!, there's a {response.status_code} error with your request. Can not fetch the data.")
 
