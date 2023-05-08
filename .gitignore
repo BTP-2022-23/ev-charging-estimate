@@ -12,6 +12,3 @@ package-lock.json
 **/*.pyo
 
 populate.py
-
-
-webpage/main/model/ropar_model.pkl
