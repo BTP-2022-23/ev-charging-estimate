@@ -116,36 +116,53 @@ class cost_model:
                 self.cost = cost
                 self.t_solar_opt = t_solar
                 self.t_ch = t_ch
+        self.cost = round(self.cost,2)
+        self.t_solar_opt = round(self.t_solar_opt,2)
+        self.t_ch = round(self.t_ch,2)
 
     def rush_factor(self):
-
-        self.t_solar_opt = self.t_solar_opt*(1-self.alpha)
-        i = int(self.t_solar_opt*4)
-        E_solar = 0
-        prev_energy = 0
-        for j in range(i):
-            P_solar_t = self.pow_arr[j] * self.num_panels / 1000
-            E_solar += 1/4 * P_solar_t
-        P_solar_t = self.pow_arr[i] * self.num_panels / 1000
-        E_solar += (self.t_solar_opt-1/4*i)*P_solar_t
-
-        E_grid = self.B_req - E_solar
-        t_grid = E_grid/self.P_grid
-        self.t_ch = self.t_solar_opt + t_grid
-        self.cost = self.t_solar_opt*self.rate_solar + t_grid*self.rate_grid
-
+        self.rate_solar_rush = np.exp(self.alpha)*self.rate_solar
+        self.cost = float('inf')
+        self.t_solar_opt = 0
+        for i in range(13):
+            t_solar = 1/4*i
+            E_solar = 0
+            prev_energy = 0
+            for j in range(i):
+                P_solar_t = self.pow_arr[j] * self.num_panels / 1000
+                E_solar += 1/4 * P_solar_t
+                if(E_solar>=self.B_req):
+                    t_solar = (self.B_req-prev_energy)/P_solar_t + 1/4*j
+                    E_solar = self.B_req
+                    break
+                prev = E_solar
+            E_grid = self.B_req - E_solar
+            t_grid = E_grid/self.P_grid
+            t_ch = t_solar + t_grid
+            cost = t_solar*self.rate_solar_rush + t_grid*self.rate_grid
+            if(cost<self.cost):
+                self.cost = cost
+                self.t_solar_opt = t_solar
+                self.t_ch = t_ch
+        self.cost = round(self.cost,2)
+        self.t_solar_opt = round(self.t_solar_opt,2)
+        self.t_ch = round(self.t_ch,2)
 
     def fixed_cost_factor(self):
         self.cost = self.cost + self.fixed_cost/self.n_transactions
+        self.cost = round(self.cost,2)
 
     def prebooking_factor(self):
         self.cost = self.cost - self.prebooking_category*self.prebooking_cost/self.max_prebooking_categ
+        self.cost = round(self.cost,2)
 
     def priority_factor(self):
         self.cost = self.cost + self.priority_rating*self.priority_cost/self.max_priority_rating
+        self.cost = round(self.cost,2)
 
     def profit_factor(self):
         self.cost = self.cost*(1+self.profit_margin)
+        self.cost = round(self.cost,2)
 
     def cost_calculator(self, alpha = 0.2, prebooking_category = 2, priority_rating = 2):
         tmp = ""
@@ -177,7 +194,7 @@ def driver(lat=30.9688367,lon=76.526088, alpha=0.2, prebooking_category=2, prior
     s += f'Temperature: {api_data[0][3]} \nFeels_Like: {api_data[0][4]} \nPressure: {api_data[0][5]}\n'
     s += f'Humidity: {api_data[0][6]} \nWind Speed: {api_data[0][7]} \nClouds: {api_data[0][8]}\n'
     irr_arr, pow_arr = api_arr_maker(api_data)
-    s += f'Irradiance = {irr_arr[0]}\nPower = {pow_arr[0]}\n'
+    s += f'Irradiance = {irr_arr[0]}\nPower = {round(pow_arr[0],2)}\n'
     c_model = cost_model(pow_arr)
     s += c_model.cost_calculator(alpha, prebooking_category, priority_rating)
     # print(s)

@@ -26,7 +26,7 @@ def HomePage(request):
     except:
       pass
   
-  s = f'latitude = {lat}\nlongitude = {lon}\nalpha = {alpha}\nprebooking_category = {prebooking_category}\npriority_rating = {priority_rating}\n'
+  s = f'latitude = {lat}\nlongitude = {lon}\n'
   s += model_util.driver(lat, lon, alpha, prebooking_category, priority_rating)
   res = s.split('\n')
   return render(request,'main/home.html', {'res':res, 'form':form})
